@@ -8,7 +8,7 @@ fetch('https://moedasdigitais.net')
 
     data.forEach(item => {
       const element = document.createElement('div');
-      element.classList.add('blog');
+      element.classList.add('f-posts-shortcode');
       element.innerHTML = `
         <img src="${item.image}" alt="${item.title}">
         <h3>${item.title}</h3>
