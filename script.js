@@ -2,17 +2,24 @@
 
 // Exemplo: Obter dados dos elementos em destaque de uma API
 fetch('https://moedasdigitais.net')
-  .then(response => response.json())
-  .then(data => {
+  .then(response => response.text())
+  .then(html => {
     const gridContainer = document.querySelector('.grid-container');
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const articles = doc.querySelectorAll('article');
 
-    data.forEach(item => {
+    articles.forEach(article => {
+      const image = article.querySelector('img');
+      const title = article.querySelector('h2 a');
+      const description = article.querySelector('.post-excerpt p');
+
       const element = document.createElement('div');
       element.classList.add('f-posts-shortcode');
       element.innerHTML = `
-        <img src="${item.image}" alt="${item.title}">
-        <h3>${item.title}</h3>
-        <p>${item.description}</p>
+        <img src="${image.src}" alt="${image.alt}">
+        <h3>${title.textContent}</h3>
+        <p>${description.textContent}</p>
       `;
 
       gridContainer.appendChild(element);
